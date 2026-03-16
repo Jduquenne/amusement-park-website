@@ -76,11 +76,14 @@ const AttractionDetailPage = ({ params }: { params: Promise<{ id: string }> }) =
 
 When `params` is actually used, type it correctly with `Promise<{ id: string }>` (Next.js 15 — params are async).
 
-`generateStaticParams` must use **function declaration syntax** (not arrow function) — Next.js requires this for proper static export detection:
+`generateStaticParams` rules for static export (`output: 'export'`):
+- Use **function declaration syntax** (not arrow function)
+- Must return **at least one entry** — Next.js 15 rejects an empty array `[]`
+- If the dynamic segment has children (e.g. `[id]/edit/`), put `generateStaticParams` in a `layout.tsx` at the `[id]` level, not in the child page
 
 ```tsx
 export async function generateStaticParams(): Promise<Array<{ id: string }>> {
-    return [];
+    return [{ id: '1' }];
 }
 ```
 

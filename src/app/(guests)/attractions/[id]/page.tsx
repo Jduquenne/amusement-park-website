@@ -1,5 +1,5 @@
 export async function generateStaticParams(): Promise<Array<{ id: string }>> {
-    return [];
+    return [{ id: '1' }];
 }
 
 const AttractionDetailPage = () => {
