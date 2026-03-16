@@ -81,7 +81,7 @@ const Footer = () => (
 
                 <div className="lg:col-span-2">
                     <Link href="/">
-                        <Image src="/logo-tivoli.svg" alt="Logo Pawland" width={110} height={36} className="brightness-0 invert opacity-90" />
+                        <Image src="/pawland.png" alt="Logo Pawland" width={110} height={36} />
                     </Link>
                     <p className="mt-5 text-sm leading-relaxed text-stone-500 max-w-xs">
                         Le premier parc d&apos;attractions entièrement dédié aux chats. Frissons, magie et ronrons garantis à Purrington.

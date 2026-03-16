@@ -4,7 +4,7 @@ import { attractions } from '@/lib/data/attractions';
 
 const AttractionsPage = () => (
     <div className="min-h-screen bg-stone-50">
-        <AttractionsHero count={attractions.length} />
+        <AttractionsHero count={attractions.length} image="/heroes/hero.png" />
         <AttractionsGrid attractions={attractions} />
     </div>
 );

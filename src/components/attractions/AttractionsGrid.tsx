@@ -7,7 +7,11 @@ import type { Attraction, AttractionCategory } from '@/lib/data/attractions';
 
 type ActiveCategory = 'Tous' | AttractionCategory;
 
-const AttractionsGrid = ({ attractions }: { attractions: Attraction[] }) => {
+interface AttractionsGridProps {
+    attractions: Attraction[];
+}
+
+const AttractionsGrid = ({ attractions }: AttractionsGridProps) => {
     const [activeCategory, setActiveCategory] = useState<ActiveCategory>('Tous');
 
     const filtered = activeCategory === 'Tous'
@@ -45,12 +49,23 @@ const AttractionsGrid = ({ attractions }: { attractions: Attraction[] }) => {
             </div>
 
             <main className="max-w-6xl mx-auto px-6 py-12">
-                <p className="text-stone-400 text-sm mb-8">
+                <p
+                    className="text-stone-400 text-sm mb-8"
+                    style={{ animation: 'fadeUp 0.5s ease both' }}
+                >
                     {filtered.length} attraction{filtered.length > 1 ? 's' : ''}
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filtered.map(attraction => (
-                        <AttractionCard key={attraction.id} {...attraction} />
+                <div key={activeCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filtered.map((attraction, index) => (
+                        <div
+                            key={attraction.id}
+                            style={{
+                                animation: 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
+                                animationDelay: `${Math.floor(index / 3) * 0.12}s`,
+                            }}
+                        >
+                            <AttractionCard {...attraction} />
+                        </div>
                     ))}
                 </div>
             </main>

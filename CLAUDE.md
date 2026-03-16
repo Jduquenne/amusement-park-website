@@ -121,11 +121,67 @@ export async function generateStaticParams(): Promise<Array<{ id: string }>> {
 - **Functions:** arrow functions for components and callbacks
 - **Return types:** annotate return types on utility functions and hooks — **not on React components** (TypeScript infers them, and `JSX.Element` is unreliable in some Next.js contexts)
 - **Props:** always destructure props
-- **Types:** no `any`, use `unknown` or strict generics
+- **Types:** no `any`, use `unknown` or strict generics; never use `as unknown as X` in components or hooks
 - **Imports:** group in this order — `react` → `next` → external libraries → local files
+- **Enums:** identifier must be in English — the string value can be in French (e.g. `MAINTENANCE = "Entretien"`, not `ENTRETIEN = "Entretien"`)
+
+### Props interfaces
+
+- Always named `<ComponentName>Props` (e.g. `AttractionCardProps`), co-located in the same file as the component
+- Never use generic names like `interface Props`
+
+```tsx
+interface AttractionCardProps {   // ✅
+    name: string;
+}
+interface Props {                  // ❌
+    name: string;
+}
+```
+
+### Component size and extraction
+
+- **One component per file** when the component uses hooks or exceeds ~15 lines
+- Inline sub-components are only acceptable for trivial, purely presentational wrappers with no hooks and no props interface
+- The "used only once" argument never justifies keeping a component inline — extraction is about readability, not reuse count
+
+### Business logic extraction
+
+Never write business logic inline inside a component. Any computation that iterates over data, applies domain rules, or would be unit-testable in isolation must live in `lib/utils/` as a named, exported pure function.
+
+The threshold is low: if a `useMemo` or handler body exceeds ~5 lines of logic, extract it.
+
+```tsx
+// ❌ 20-line reduce directly inside useMemo
+const total = useMemo(() => attractions.filter(...).reduce(...), [attractions]);
+
+// ✅ extract to lib/utils/attractionUtils.ts
+export const getFilteredAttractions = (attractions: Attraction[], category: string) => { ... };
+const total = useMemo(() => getFilteredAttractions(attractions, category), [attractions, category]);
+```
+
+### File types
+
+- `.tsx` files must **only** contain React components
+- Hooks → `.ts` files (`useXxx.ts`)
+- Utilities, helpers, pure functions → `.ts` files
+- **Exception**: Next.js special exports (`generateStaticParams`, `metadata`, `generateMetadata`) must live in the page/layout file — they are framework requirements, not violations
+
+### React hooks (Client Components only)
+
+- Always include every variable used inside `useEffect`/`useMemo`/`useCallback` in its deps array
+- Define module-level constants outside the component so they are not deps
+- Avoid `|| []` as a fallback directly in JSX or `useMemo` — it creates a new array reference on every render; use `useMemo` to stabilize it
 
 ### Path aliases (tsconfig.json)
 - `@/*` → `src/*` (covers everything)
+
+### Lint — zero tolerance
+
+**`eslint-disable` comments are strictly forbidden.** Every lint error must be fixed at the root.
+
+- **No empty `catch` blocks** — always explain why the error is intentionally ignored: `catch { /* reason */ }`
+- **No ternary for side effects** — use `if/else` when the goal is mutation, not to produce a value
 
 ## Commands
 

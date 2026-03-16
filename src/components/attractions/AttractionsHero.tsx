@@ -1,23 +1,30 @@
-const AttractionsHero = ({ count }: { count: number }) => (
-    <section className="relative bg-[#0a1a0f] px-6 py-28 text-center overflow-hidden">
-        <div
-            className="absolute inset-0 opacity-30"
-            style={{
-                backgroundImage: 'radial-gradient(circle, #1a5c3a 1px, transparent 1px)',
-                backgroundSize: '28px 28px',
-            }}
+import Image from 'next/image';
+
+interface AttractionsHeroProps {
+    count: number;
+    image: string;
+}
+
+const AttractionsHero = ({ count, image }: AttractionsHeroProps) => (
+    <section className="relative px-6 py-28 text-center overflow-hidden">
+        <Image
+            src={image}
+            alt="Attractions Pawland"
+            fill
+            className="object-cover object-top"
+            priority
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,_#0f2d1a_0%,_transparent_100%)]" />
+        <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative">
             <p className="text-green-500 text-xs tracking-[0.4em] uppercase mb-5 font-medium">
-                Parc Tivoli
+                Pawland
             </p>
             <h1 className="text-white text-7xl md:text-9xl font-black uppercase leading-none tracking-tighter">
                 Attrac<span className="text-[#4ade80]">tions</span>
             </h1>
             <p className="text-stone-400 mt-6 text-base max-w-md mx-auto leading-relaxed">
-                Plus de 30 expériences inoubliables vous attendent. Des frissons pour tous les âges.
+                {count} expériences inoubliables vous attendent. Des frissons pour tous les âges.
             </p>
             <div className="mt-10 inline-flex items-center gap-4">
                 <div className="h-px w-16 bg-gradient-to-r from-transparent to-green-700" />

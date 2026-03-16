@@ -6,7 +6,11 @@ const STYLES: Record<AttractionCategory, string> = {
     'Pour les petits': 'bg-violet-950/50 text-violet-300',
 };
 
-const CategoryBadge = ({ category }: { category: AttractionCategory }) => (
+interface CategoryBadgeProps {
+    category: AttractionCategory;
+}
+
+const CategoryBadge = ({ category }: CategoryBadgeProps) => (
     <span className={`text-xs font-medium px-3 py-1 rounded-full backdrop-blur-sm ${STYLES[category]}`}>
         {category}
     </span>

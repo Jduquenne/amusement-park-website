@@ -1,6 +1,10 @@
 import GuestLayout from "@/components/layout/GuestLayout";
 
-const GuestsGroupLayout = ({ children }: { children: React.ReactNode }) => {
+interface GuestsGroupLayoutProps {
+    children: React.ReactNode;
+}
+
+const GuestsGroupLayout = ({ children }: GuestsGroupLayoutProps) => {
     return <GuestLayout>{children}</GuestLayout>;
 };
 

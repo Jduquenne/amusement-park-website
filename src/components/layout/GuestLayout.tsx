@@ -1,7 +1,11 @@
-import Header from "../ui/Header";
+import Header from "./Header";
 import Footer from "./Footer";
 
-const GuestLayout = ({ children }: { children: React.ReactNode }) => {
+interface GuestLayoutProps {
+    children: React.ReactNode;
+}
+
+const GuestLayout = ({ children }: GuestLayoutProps) => {
     return (
         <>
             <Header />

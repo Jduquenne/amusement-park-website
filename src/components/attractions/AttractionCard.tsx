@@ -1,18 +1,30 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import CategoryBadge from './CategoryBadge';
 import type { Attraction } from '@/lib/data/attractions';
 
-const AttractionCard = ({ id, name, category, description, minHeight, gradient }: Attraction) => (
+type AttractionCardProps = Attraction;
+
+const AttractionCard = ({ id, name, category, description, minHeight, image }: AttractionCardProps) => (
     <Link href={`/attractions/${id}`} className="group">
         <article className="bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100 hover:shadow-xl hover:border-stone-200 transition-all duration-300 hover:-translate-y-0.5 h-full flex flex-col">
 
-            <div className={`h-52 bg-gradient-to-br ${gradient} relative flex items-end justify-between p-4`}>
-                <CategoryBadge category={category} />
-                {minHeight && (
-                    <span className="text-xs text-white/60 flex items-center gap-1 bg-black/30 backdrop-blur-sm px-2.5 py-1 rounded-full">
-                        ↕ {minHeight} cm min.
-                    </span>
-                )}
+            <div className="h-52 relative">
+                <Image
+                    src={image}
+                    alt={name}
+                    fill
+                    className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 flex items-end justify-between p-4">
+                    <CategoryBadge category={category} />
+                    {minHeight && (
+                        <span className="text-xs text-white/60 flex items-center gap-1 bg-black/30 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                            ↕ {minHeight} cm min.
+                        </span>
+                    )}
+                </div>
             </div>
 
             <div className="p-6 flex flex-col flex-1">
