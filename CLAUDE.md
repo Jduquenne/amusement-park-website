@@ -76,6 +76,14 @@ const AttractionDetailPage = ({ params }: { params: Promise<{ id: string }> }) =
 
 When `params` is actually used, type it correctly with `Promise<{ id: string }>` (Next.js 15 — params are async).
 
+`generateStaticParams` must use **function declaration syntax** (not arrow function) — Next.js requires this for proper static export detection:
+
+```tsx
+export async function generateStaticParams(): Promise<Array<{ id: string }>> {
+    return [];
+}
+```
+
 ### Server Components vs Client Components
 - **Default: Server Component** — no `'use client'` unless necessary
 - Add `'use client'` **only** if the component uses:

@@ -1,6 +1,6 @@
-export const generateStaticParams = async (): Promise<Array<{ id: string }>> => {
+export async function generateStaticParams(): Promise<Array<{ id: string }>> {
     return [];
-};
+}
 
 const AttractionDetailPage = () => {
     return <h1>Détail de l&apos;attraction</h1>;
