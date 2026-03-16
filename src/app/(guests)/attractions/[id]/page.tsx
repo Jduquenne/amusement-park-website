@@ -1,7 +1,9 @@
-export async function generateStaticParams() {
+export const generateStaticParams = async (): Promise<Array<{ id: string }>> => {
     return [];
-}
+};
 
-export default function AttractionDetailPage() {
+const AttractionDetailPage = (): JSX.Element => {
     return <h1>Détail de l&apos;attraction</h1>;
-}
+};
+
+export default AttractionDetailPage;

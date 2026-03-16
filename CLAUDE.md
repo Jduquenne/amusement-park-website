@@ -34,14 +34,17 @@ src/app/
 
 Les parenthèses `(guests)` et `(admin)` sont des **Route Groups** Next.js : ils n'apparaissent pas dans l'URL mais permettent d'appliquer des layouts différents.
 
-## Structure des composants
+## Structure des composants et dossiers
 
 ```
-src/components/
-├── layout/
-│   └── GuestLayout.tsx   ← Header + <main> wrapper (Server Component)
-└── ui/
-    └── Header.tsx        ← Navigation fixe (Server Component)
+src/
+├── app/                  ← App Router (routes, layouts, pages)
+├── components/
+│   ├── layout/           ← Layouts (GuestLayout, AdminLayout...)
+│   └── ui/               ← Composants UI réutilisables (Header, Button, Card...)
+├── hooks/                ← Custom React hooks
+├── lib/                  ← Helpers, wrappers API, utilitaires
+└── tests/                ← Tests unitaires et d'intégration
 ```
 
 ## Conventions importantes
@@ -89,6 +92,14 @@ Quand `params` est réellement utilisé, le typer correctement avec `Promise<{ i
 - Utilisation en CSS : `font-family: var(--font-montserrat-black)`
 - Utilisation en Tailwind : configurer `@theme` dans `globals.css` si besoin de classes custom
 
+### Style de code
+
+- **Fonctions** : arrow functions pour les composants et callbacks
+- **Types de retour** : toujours annoter les types de retour des fonctions
+- **Props** : toujours destructurer les props
+- **Types** : interdire `any`, utiliser `unknown` ou des génériques stricts
+- **Imports** : grouper dans cet ordre — `react` → `next` → bibliothèques externes → fichiers locaux
+
 ### Path aliases (tsconfig.json)
 - `@/*` → `src/*` (couvre tout)
 
@@ -99,6 +110,16 @@ npm run dev     # Serveur de développement (Turbopack)
 npm run build   # Build de production
 npm run lint    # ESLint
 ```
+
+### Export statique — règles obligatoires (`output: export`)
+
+Le projet est configuré pour GitHub Pages via `output: "export"`. Ces contraintes s'appliquent à **tout** le projet :
+
+- **Routes dynamiques `[id]`** : doivent toujours avoir `generateStaticParams()` même si elle retourne `[]`
+- **API Routes** : incompatibles avec l'export statique, ne pas en créer
+- **`next/image`** : fonctionne uniquement avec `unoptimized: true` (déjà configuré)
+
+Avant de suggérer un commit, toujours vérifier mentalement que ces règles sont respectées. En cas de doute, demander à l'utilisateur de lancer `npm run build` en local — ça reproduit exactement le build GitHub Actions.
 
 ## Convention de commit
 
@@ -129,10 +150,28 @@ Exemple : `feat: ajout du header de navigation avec logo et liens`
 | Font optimization | `next/font` natif | Manuel |
 | Code splitting | Automatique | Manuel |
 
+## Sécurité
+
+- Valider toutes les entrées côté serveur (Server Actions)
+- Cookies HTTPS uniquement + tokens CSRF pour les formulaires sensibles
+- Protéger les routes admin avec middleware ou logique de session
+
+## Outils à intégrer (non installés)
+
+| Outil | Usage |
+|---|---|
+| shadcn/ui | Composants UI (forms, cards, dialogs...) — `npx shadcn-ui@latest init` |
+| TanStack Query | Data fetching — `QueryClientProvider` dans `layout.tsx`, logique API dans `lib/api/` |
+| Prettier | Formatage automatique — `pnpm format` |
+| Jest + RTL | Tests unitaires et d'intégration — co-localisés ou dans `src/tests/` |
+
 ## Ce qu'il reste à implémenter
 
 - [ ] Pages guests (contenu réel : attractions, billets, carte)
 - [ ] Authentification (routes protégées admin)
-- [ ] API Routes ou Server Actions pour les données
+- [ ] Server Actions pour les données
 - [ ] Sidebar/header admin
 - [ ] Composants UI réutilisables (Button, Card, Modal...)
+- [ ] Installer et configurer shadcn/ui
+- [ ] Installer et configurer TanStack Query
+- [ ] Mettre en place les tests (Jest + RTL)

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Header() {
+const Header = (): JSX.Element => {
     return (
         <header className="fixed top-0 w-full bg-white shadow z-50">
             <nav className="flex items-center justify-center h-16 relative">
@@ -29,4 +29,6 @@ export default function Header() {
             </nav>
         </header>
     );
-}
+};
+
+export default Header;

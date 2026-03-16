@@ -34,18 +34,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AppLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const AppLayout = ({ children }: Readonly<{ children: React.ReactNode }>): JSX.Element => {
   return (
     <html lang="fr">
-      <body
-        className={`${montserratBlack.variable} ${ralewayRegular.variable} antialiased`}
-      >
+      <body className={`${montserratBlack.variable} ${ralewayRegular.variable} antialiased`}>
         {children}
       </body>
     </html>
   );
-}
+};
+
+export default AppLayout;
