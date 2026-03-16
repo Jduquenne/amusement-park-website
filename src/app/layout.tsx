@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { Montserrat, Raleway } from "next/font/google";
 import "./globals.css";
-import GuestLayout from "@/components/layout/GuestLayout";
 
 const montserratBlack = Montserrat({
   variable: "--font-montserrat-black",
+  weight: "900",
   subsets: ["latin"],
 });
 
-const ralewrayRegular = Raleway({
+const ralewayRegular = Raleway({
   variable: "--font-raleway-regular",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -41,9 +42,9 @@ export default function AppLayout({
   return (
     <html lang="fr">
       <body
-        className={`${montserratBlack.variable} ${ralewrayRegular.variable} antialiased`}
+        className={`${montserratBlack.variable} ${ralewayRegular.variable} antialiased`}
       >
-        <GuestLayout>{children}</GuestLayout>
+        {children}
       </body>
     </html>
   );
