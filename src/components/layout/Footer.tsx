@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { assetPath } from '@/lib/utils/assetPath';
 
 const COLUMNS = [
     {
@@ -81,7 +82,7 @@ const Footer = () => (
 
                 <div className="lg:col-span-2">
                     <Link href="/">
-                        <Image src="/pawland.png" alt="Logo Pawland" width={110} height={36} />
+                        <Image src={assetPath('/pawland.png')} alt="Logo Pawland" width={110} height={36} />
                     </Link>
                     <p className="mt-5 text-sm leading-relaxed text-stone-500 max-w-xs">
                         Le premier parc d&apos;attractions entièrement dédié aux chats. Frissons, magie et ronrons garantis à Purrington.

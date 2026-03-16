@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { assetPath } from '@/lib/utils/assetPath';
 import CategoryBadge from './CategoryBadge';
 import type { Attraction } from '@/lib/data/attractions';
 
@@ -11,7 +12,7 @@ const AttractionCard = ({ id, name, category, description, minHeight, image }: A
 
             <div className="h-52 relative">
                 <Image
-                    src={image}
+                    src={assetPath(image)}
                     alt={name}
                     fill
                     className="object-cover"

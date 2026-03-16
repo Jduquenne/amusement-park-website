@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { assetPath } from '@/lib/utils/assetPath';
 
 interface AttractionsHeroProps {
     count: number;
@@ -8,7 +9,7 @@ interface AttractionsHeroProps {
 const AttractionsHero = ({ count, image }: AttractionsHeroProps) => (
     <section className="relative px-6 py-28 text-center overflow-hidden">
         <Image
-            src={image}
+            src={assetPath(image)}
             alt="Attractions Pawland"
             fill
             className="object-cover object-top"

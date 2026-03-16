@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { assetPath } from '@/lib/utils/assetPath';
 
 const NAV_LEFT = [
     { label: 'Attractions', href: '/attractions' },
@@ -29,7 +30,7 @@ const Header = () => (
 
             <div className="flex justify-center">
                 <Link href="/attractions">
-                    <Image src="/pawland.png" alt="Pawland" width={50} height={50} />
+                    <Image src={assetPath('/pawland.png')} alt="Pawland" width={50} height={50} />
                 </Link>
             </div>
 

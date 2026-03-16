@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { assetPath } from '@/lib/utils/assetPath';
 import CategoryBadge from '@/components/attractions/CategoryBadge';
 import { attractions } from '@/lib/data/attractions';
 
@@ -28,7 +29,7 @@ const AttractionDetailPage = async ({ params }: AttractionDetailPageProps) => {
                 style={{ animation: 'fadeIn 0.9s ease both' }}
             >
                 <Image
-                    src={image}
+                    src={assetPath(image)}
                     alt={name}
                     fill
                     className="object-cover object-top scale-105"
