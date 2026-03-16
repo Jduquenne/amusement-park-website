@@ -3,7 +3,9 @@ import type { AttractionCategory } from '@/lib/data/attractions';
 const STYLES: Record<AttractionCategory, string> = {
     'Sensations fortes': 'bg-red-950/50 text-red-300',
     'Pour tous': 'bg-emerald-950/50 text-emerald-300',
-    'Pour les petits': 'bg-violet-950/50 text-violet-300',
+    'Aquatique': 'bg-sky-950/50 text-sky-300',
+    'Manèges': 'bg-amber-950/50 text-amber-300',
+    'Pour les chatons': 'bg-violet-950/50 text-violet-300',
 };
 
 interface CategoryBadgeProps {
