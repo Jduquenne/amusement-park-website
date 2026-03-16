@@ -1,4 +1,4 @@
-const AdminUsersPage = (): JSX.Element => {
+const AdminUsersPage = () => {
     return <h1>Gestion des Utilisateurs</h1>;
 };
 

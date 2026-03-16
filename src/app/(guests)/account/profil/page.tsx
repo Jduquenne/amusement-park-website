@@ -1,4 +1,4 @@
-const ProfilPage = (): JSX.Element => {
+const ProfilPage = () => {
     return <h1>Mon Profil</h1>;
 };
 

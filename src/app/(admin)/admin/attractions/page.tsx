@@ -1,4 +1,4 @@
-const AdminAttractionsPage = (): JSX.Element => {
+const AdminAttractionsPage = () => {
     return <h1>Gestion des Attractions</h1>;
 };
 

@@ -2,7 +2,7 @@ export const generateStaticParams = async (): Promise<Array<{ id: string }>> => 
     return [];
 };
 
-const EditAttractionPage = (): JSX.Element => {
+const EditAttractionPage = () => {
     return <h1>Modifier l&apos;attraction</h1>;
 };
 

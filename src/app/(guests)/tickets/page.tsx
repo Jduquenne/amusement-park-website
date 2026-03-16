@@ -1,4 +1,4 @@
-const TicketsPage = (): JSX.Element => {
+const TicketsPage = () => {
     return <h1>Page de Tickets</h1>;
 };
 

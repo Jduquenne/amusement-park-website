@@ -1,4 +1,4 @@
-const OrderPage = (): JSX.Element => {
+const OrderPage = () => {
     return <h1>Mes Commandes</h1>;
 };
 

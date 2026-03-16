@@ -1,4 +1,4 @@
-const PlanPage = (): JSX.Element => {
+const PlanPage = () => {
     return <h1>Plan du Parc</h1>;
 };
 

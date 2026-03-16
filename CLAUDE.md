@@ -1,30 +1,30 @@
 # Amusement Park Website — CLAUDE.md
 
-Projet d'apprentissage Next.js : site web pour un parc d'attractions fictif (Tivoli).
-Objectif pédagogique : comprendre le fonctionnement de Next.js App Router vs SPA classique.
+Learning project built with Next.js: website for a fictional amusement park (Tivoli).
+Educational goal: understand how Next.js App Router works compared to classic SPAs.
 
-## Stack technique
+## Tech Stack
 
 - **Framework:** Next.js 15 (App Router)
-- **Langage:** TypeScript (strict mode)
-- **Styling:** Tailwind CSS v4 (CSS-first, pas de `tailwind.config.js`)
-- **Fonts:** Montserrat Black (titres) + Raleway Regular (corps) via `next/font/google`
-- **React:** v19 avec Server Components par défaut
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS v4 (CSS-first, no `tailwind.config.js`)
+- **Fonts:** Montserrat Black (headings) + Raleway Regular (body) via `next/font/google`
+- **React:** v19 with Server Components by default
 
-## Architecture des routes
+## Route Architecture
 
 ```
 src/app/
-├── layout.tsx          ← Root layout (HTML, body, fonts, metadata uniquement)
-├── page.tsx            ← Page d'accueil /
-├── (guests)/           ← Groupe de routes visiteurs (layout avec header)
-│   ├── layout.tsx      ← Applique GuestLayout (Header + main)
+├── layout.tsx          ← Root layout (HTML, body, fonts, metadata only)
+├── page.tsx            ← Home page /
+├── (guests)/           ← Guest route group (layout with header)
+│   ├── layout.tsx      ← Applies GuestLayout (Header + main)
 │   ├── attractions/    ← /attractions + /attractions/[id]
 │   ├── tickets/        ← /tickets + /tickets/confirmation
 │   ├── map/            ← /map
-│   └── account/        ← /account + /account/profil + /account/order
-└── (admin)/            ← Groupe de routes admin (layout admin séparé)
-    ├── layout.tsx      ← Layout admin (futur sidebar admin)
+│   └── account/        ← /account + /account/profile + /account/orders
+└── (admin)/            ← Admin route group (separate admin layout)
+    ├── layout.tsx      ← Admin layout (future admin sidebar)
     └── admin/
         ├── dashboard/
         ├── attractions/ ← /admin/attractions + /admin/attractions/[id]/edit
@@ -32,146 +32,152 @@ src/app/
         └── users/
 ```
 
-Les parenthèses `(guests)` et `(admin)` sont des **Route Groups** Next.js : ils n'apparaissent pas dans l'URL mais permettent d'appliquer des layouts différents.
+Parentheses `(guests)` and `(admin)` are Next.js **Route Groups**: they don't appear in the URL but allow different layouts per group.
 
-## Structure des composants et dossiers
+## Folder Structure
 
 ```
 src/
 ├── app/                  ← App Router (routes, layouts, pages)
 ├── components/
 │   ├── layout/           ← Layouts (GuestLayout, AdminLayout...)
-│   └── ui/               ← Composants UI réutilisables (Header, Button, Card...)
+│   └── ui/               ← Reusable UI components (Header, Button, Card...)
 ├── hooks/                ← Custom React hooks
-├── lib/                  ← Helpers, wrappers API, utilitaires
-└── tests/                ← Tests unitaires et d'intégration
+├── lib/                  ← Helpers, API wrappers, utilities
+└── tests/                ← Unit and integration tests
 ```
 
-## Conventions importantes
+## Conventions
 
-### Pas de commentaires
-Ne jamais générer de commentaires dans le code (ni `//`, ni `/* */`, ni `{/* */}`). Le code doit être auto-descriptif via des noms clairs. Cette règle s'applique à tous les fichiers du projet.
+### No comments
+Never generate comments in code (no `//`, no `/* */`, no `{/* */}`). Code must be self-descriptive through clear naming. This rule applies to all project files.
 
-
-
-### Paramètres inutilisés dans les pages dynamiques
-
-Les pages avec des segments dynamiques (`[id]`) reçoivent `params` en props. Si le paramètre n'est pas utilisé (page placeholder), **ne pas le déclarer du tout** dans la signature de la fonction :
+### Naming — English only
+All functions, components, classes, variables, and files must be named in **English**.
 
 ```tsx
-// ✅ Correct — params non utilisé, on ne le déclare pas
-export default function AttractionDetailPage() {
-    return <h1>Détail</h1>;
-}
-
-// ❌ Incorrect — ESLint @typescript-eslint/no-unused-vars va échouer
-export default function AttractionDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    return <h1>Détail</h1>;
-}
+const AccountPage = () => { ... }   // ✅
+const ComptePage = () => { ... }    // ❌ French
 ```
 
-Quand `params` est réellement utilisé, le typer correctement avec `Promise<{ id: string }>` (Next.js 15 — les params sont asynchrones).
+### Unused parameters in dynamic pages
+
+Dynamic route pages (`[id]`) receive `params` as props. If the parameter is unused (placeholder page), **do not declare it at all** in the function signature:
+
+```tsx
+const AttractionDetailPage = () => {   // ✅ unused params, not declared
+    return <h1>Detail</h1>;
+};
+
+const AttractionDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {  // ❌ ESLint will fail
+    return <h1>Detail</h1>;
+};
+```
+
+When `params` is actually used, type it correctly with `Promise<{ id: string }>` (Next.js 15 — params are async).
 
 ### Server Components vs Client Components
-- **Par défaut : Server Component** — pas de `'use client'` sauf si nécessaire
-- Ajouter `'use client'` **uniquement** si le composant utilise :
-  - `useState`, `useEffect`, `useRef` ou autres hooks React
-  - Des event handlers (`onClick`, `onChange`, etc.)
-  - Des APIs browser (`window`, `localStorage`, etc.)
-- `Link`, `Image` de Next.js fonctionnent en Server Component
+- **Default: Server Component** — no `'use client'` unless necessary
+- Add `'use client'` **only** if the component uses:
+  - `useState`, `useEffect`, `useRef` or other React hooks
+  - Event handlers (`onClick`, `onChange`, etc.)
+  - Browser APIs (`window`, `localStorage`, etc.)
+- `Link` and `Image` from Next.js work in Server Components
 
 ### Tailwind CSS v4
-- Configuration via `globals.css` avec `@import "tailwindcss"` — **pas de `tailwind.config.js`**
-- PostCSS via `postcss.config.mjs` avec `@tailwindcss/postcss`
-- Variables CSS custom dans `:root` pour les couleurs du thème
+- Configured via `globals.css` with `@import "tailwindcss"` — **no `tailwind.config.js`**
+- PostCSS via `postcss.config.mjs` with `@tailwindcss/postcss`
+- CSS custom properties in `:root` for theme colors
 - Dark mode via `@media (prefers-color-scheme: dark)`
 
 ### Fonts
-- Chargées dans `src/app/layout.tsx` via `next/font/google`
-- Injectées comme variables CSS : `--font-montserrat-black`, `--font-raleway-regular`
-- Utilisation en CSS : `font-family: var(--font-montserrat-black)`
-- Utilisation en Tailwind : configurer `@theme` dans `globals.css` si besoin de classes custom
+- Loaded in `src/app/layout.tsx` via `next/font/google`
+- Injected as CSS variables: `--font-montserrat-black`, `--font-raleway-regular`
+- Usage in CSS: `font-family: var(--font-montserrat-black)`
+- Usage in Tailwind: configure `@theme` in `globals.css` if custom classes are needed
 
-### Style de code
+### Code Style
 
-- **Fonctions** : arrow functions pour les composants et callbacks
-- **Types de retour** : toujours annoter les types de retour des fonctions
-- **Props** : toujours destructurer les props
-- **Types** : interdire `any`, utiliser `unknown` ou des génériques stricts
-- **Imports** : grouper dans cet ordre — `react` → `next` → bibliothèques externes → fichiers locaux
+- **Functions:** arrow functions for components and callbacks
+- **Return types:** annotate return types on utility functions and hooks — **not on React components** (TypeScript infers them, and `JSX.Element` is unreliable in some Next.js contexts)
+- **Props:** always destructure props
+- **Types:** no `any`, use `unknown` or strict generics
+- **Imports:** group in this order — `react` → `next` → external libraries → local files
 
 ### Path aliases (tsconfig.json)
-- `@/*` → `src/*` (couvre tout)
+- `@/*` → `src/*` (covers everything)
 
-## Commandes
+## Commands
 
 ```bash
-npm run dev     # Serveur de développement (Turbopack)
-npm run build   # Build de production
+npm run dev     # Development server (Turbopack)
+npm run build   # Production build
 npm run lint    # ESLint
 ```
 
-### Export statique — règles obligatoires (`output: export`)
+### Static export — mandatory rules (`output: export`)
 
-Le projet est configuré pour GitHub Pages via `output: "export"`. Ces contraintes s'appliquent à **tout** le projet :
+The project targets GitHub Pages via `output: "export"`. These constraints apply to the **entire** project:
 
-- **Routes dynamiques `[id]`** : doivent toujours avoir `generateStaticParams()` même si elle retourne `[]`
-- **API Routes** : incompatibles avec l'export statique, ne pas en créer
-- **`next/image`** : fonctionne uniquement avec `unoptimized: true` (déjà configuré)
+- **Dynamic routes `[id]`**: must always have `generateStaticParams()` even if it returns `[]`
+- **API Routes**: incompatible with static export, do not create any
+- **`next/image`**: requires `unoptimized: true` (already configured)
 
-Avant de suggérer un commit, toujours vérifier mentalement que ces règles sont respectées. En cas de doute, demander à l'utilisateur de lancer `npm run build` en local — ça reproduit exactement le build GitHub Actions.
+Before suggesting a commit, always mentally verify these rules are respected. If in doubt, ask the user to run `npm run build` locally — it reproduces the GitHub Actions build exactly.
 
-## Convention de commit
+## Commit Convention
 
-Quand je dis **"commit"**, fournir uniquement le message de commit — **ne pas exécuter de commande git**.
+When I say **"commit"**, provide only the commit message — **do not execute any git command**.
 
-Le message doit commencer par un préfixe :
+The message must start with a prefix:
 
-| Préfixe | Usage |
+| Prefix | Usage |
 |---|---|
-| `feat:` | Nouvelle fonctionnalité |
-| `fix:` | Correction de bug |
-| `refactor:` | Refactoring sans changement fonctionnel |
-| `style:` | Changements purement visuels / CSS |
-| `chore:` | Config, dépendances, outillage |
-| `docs:` | Documentation uniquement |
+| `feat:` | New feature |
+| `fix:` | Bug fix |
+| `refactor:` | Refactoring without functional change |
+| `style:` | Visual/CSS changes only |
+| `chore:` | Config, dependencies, tooling |
+| `docs:` | Documentation only |
 
-Exemple : `feat: ajout du header de navigation avec logo et liens`
+Example: `feat: add navigation header with logo and links`
 
-## Pourquoi Next.js vs React/Angular/Vue ?
+Commit messages must be written in **English**.
 
-| Fonctionnalité | Next.js | SPA classique |
+## Why Next.js vs React/Angular/Vue?
+
+| Feature | Next.js | Classic SPA |
 |---|---|---|
-| SSR / SSG | Natif | Complexe à configurer |
-| Routing | Basé sur fichiers (App Router) | Bibliothèque externe |
-| Server Components | Oui (réduit le JS client) | Non |
-| SEO | Excellent (HTML rendu serveur) | Difficile |
-| Image optimization | `next/image` natif | Manuel |
-| Font optimization | `next/font` natif | Manuel |
-| Code splitting | Automatique | Manuel |
+| SSR / SSG | Built-in | Complex to configure |
+| Routing | File-based (App Router) | External library |
+| Server Components | Yes (reduces client JS) | No |
+| SEO | Excellent (server-rendered HTML) | Difficult |
+| Image optimization | `next/image` built-in | Manual |
+| Font optimization | `next/font` built-in | Manual |
+| Code splitting | Automatic | Manual |
 
-## Sécurité
+## Security
 
-- Valider toutes les entrées côté serveur (Server Actions)
-- Cookies HTTPS uniquement + tokens CSRF pour les formulaires sensibles
-- Protéger les routes admin avec middleware ou logique de session
+- Validate all server-side inputs (Server Actions)
+- HTTPS-only cookies + CSRF tokens for sensitive forms
+- Protect admin routes with middleware or session logic
 
-## Outils à intégrer (non installés)
+## Tools to integrate (not yet installed)
 
-| Outil | Usage |
+| Tool | Usage |
 |---|---|
-| shadcn/ui | Composants UI (forms, cards, dialogs...) — `npx shadcn-ui@latest init` |
-| TanStack Query | Data fetching — `QueryClientProvider` dans `layout.tsx`, logique API dans `lib/api/` |
-| Prettier | Formatage automatique — `pnpm format` |
-| Jest + RTL | Tests unitaires et d'intégration — co-localisés ou dans `src/tests/` |
+| shadcn/ui | UI components (forms, cards, dialogs...) — `npx shadcn-ui@latest init` |
+| TanStack Query | Data fetching — `QueryClientProvider` in `layout.tsx`, API logic in `lib/api/` |
+| Prettier | Auto formatting — `npm run format` |
+| Jest + RTL | Unit and integration tests — co-located or in `src/tests/` |
 
-## Ce qu'il reste à implémenter
+## TODO
 
-- [ ] Pages guests (contenu réel : attractions, billets, carte)
-- [ ] Authentification (routes protégées admin)
-- [ ] Server Actions pour les données
-- [ ] Sidebar/header admin
-- [ ] Composants UI réutilisables (Button, Card, Modal...)
-- [ ] Installer et configurer shadcn/ui
-- [ ] Installer et configurer TanStack Query
-- [ ] Mettre en place les tests (Jest + RTL)
+- [ ] Guest pages (real content: attractions, tickets, map)
+- [ ] Authentication (protected admin routes)
+- [ ] Server Actions for data
+- [ ] Admin sidebar/header
+- [ ] Reusable UI components (Button, Card, Modal...)
+- [ ] Install and configure shadcn/ui
+- [ ] Install and configure TanStack Query
+- [ ] Set up tests (Jest + RTL)

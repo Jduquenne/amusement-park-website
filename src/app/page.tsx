@@ -1,4 +1,4 @@
-const HomePage = (): JSX.Element => {
+const HomePage = () => {
   return <h1>Accueil du Parc</h1>;
 };
 

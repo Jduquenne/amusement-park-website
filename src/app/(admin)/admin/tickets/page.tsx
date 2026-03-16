@@ -1,4 +1,4 @@
-const AdminTicketsPage = (): JSX.Element => {
+const AdminTicketsPage = () => {
     return <h1>Gestion des Billets</h1>;
 };
 

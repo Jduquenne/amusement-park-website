@@ -1,4 +1,4 @@
-const ConfirmationPage = (): JSX.Element => {
+const ConfirmationPage = () => {
     return <h1>Confirmation de commande</h1>;
 };
 

@@ -1,6 +1,6 @@
 import GuestLayout from "@/components/layout/GuestLayout";
 
-const GuestsGroupLayout = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const GuestsGroupLayout = ({ children }: { children: React.ReactNode }) => {
     return <GuestLayout>{children}</GuestLayout>;
 };
 

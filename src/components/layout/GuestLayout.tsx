@@ -1,6 +1,6 @@
 import Header from "../ui/Header";
 
-const GuestLayout = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const GuestLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             <Header />

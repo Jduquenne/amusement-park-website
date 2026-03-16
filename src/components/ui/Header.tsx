@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-const Header = (): JSX.Element => {
+const Header = () => {
     return (
         <header className="fixed top-0 w-full bg-white shadow z-50">
             <nav className="flex items-center justify-center h-16 relative">

@@ -1,5 +1,5 @@
-const ComptePage = (): JSX.Element => {
+const AccountPage = () => {
     return <h1>Mon Compte</h1>;
 };
 
-export default ComptePage;
+export default AccountPage;
