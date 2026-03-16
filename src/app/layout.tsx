@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 const AppLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang="fr">
-      <body className={`${montserratBlack.variable} ${ralewayRegular.variable} antialiased`}>
+      <body className={`${montserratBlack.variable} ${ralewayRegular.variable} antialiased`} suppressHydrationWarning>
         {children}
       </body>
     </html>

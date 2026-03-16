@@ -1,7 +1,16 @@
 # Amusement Park Website — CLAUDE.md
 
-Learning project built with Next.js: website for a fictional amusement park (Tivoli).
+Learning project built with Next.js: website for **Pawland**, a fictional cat-themed amusement park located in the fictional city of **Purrington**.
 Educational goal: understand how Next.js App Router works compared to classic SPAs.
+
+## Project Identity
+
+- **Park name:** Pawland
+- **Location:** Purrington (fictional city)
+- **Concept:** The first amusement park entirely dedicated to cats — attractions, visuals and content all revolve around the cat universe
+- **Tone:** Fun, whimsical, yet visually premium
+- **Visuals:** Attraction images will be AI-generated (cats riding attractions)
+- **Contact (fictional):** 12 Whisker Lane, Purrington — hello@pawland.fr
 
 ## Tech Stack
 
