@@ -79,7 +79,7 @@ npm run lint    # ESLint
 
 ## Convention de commit
 
-Quand je dis **"commit"**, créer un commit avec un message court et descriptif de ce qui a été fait depuis le dernier commit.
+Quand je dis **"commit"**, fournir uniquement le message de commit — **ne pas exécuter de commande git**.
 
 Le message doit commencer par un préfixe :
 
