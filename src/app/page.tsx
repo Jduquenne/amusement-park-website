@@ -1,5 +1,16 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 const HomePage = () => {
-  return <h1>Accueil du Parc</h1>;
+    const router = useRouter();
+
+    useEffect(() => {
+        router.replace('/attractions');
+    }, [router]);
+
+    return null;
 };
 
 export default HomePage;

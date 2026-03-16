@@ -133,6 +133,8 @@ The project targets GitHub Pages via `output: "export"`. These constraints apply
 - **Dynamic routes `[id]`**: must always have `generateStaticParams()` even if it returns `[]`
 - **API Routes**: incompatible with static export, do not create any
 - **`next/image`**: requires `unoptimized: true` (already configured)
+- **`basePath`**: set to `/amusement-park-website` — required for GitHub Pages so assets resolve correctly under the subdirectory
+- **Client-side redirects**: server-side `redirect()` does not work in static export — use `useRouter().replace()` inside a `useEffect` instead
 
 Before suggesting a commit, always mentally verify these rules are respected. If in doubt, ask the user to run `npm run build` locally — it reproduces the GitHub Actions build exactly.
 
