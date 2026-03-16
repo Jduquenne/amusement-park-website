@@ -46,6 +46,29 @@ src/components/
 
 ## Conventions importantes
 
+### Pas de commentaires
+Ne jamais générer de commentaires dans le code (ni `//`, ni `/* */`, ni `{/* */}`). Le code doit être auto-descriptif via des noms clairs. Cette règle s'applique à tous les fichiers du projet.
+
+
+
+### Paramètres inutilisés dans les pages dynamiques
+
+Les pages avec des segments dynamiques (`[id]`) reçoivent `params` en props. Si le paramètre n'est pas utilisé (page placeholder), **ne pas le déclarer du tout** dans la signature de la fonction :
+
+```tsx
+// ✅ Correct — params non utilisé, on ne le déclare pas
+export default function AttractionDetailPage() {
+    return <h1>Détail</h1>;
+}
+
+// ❌ Incorrect — ESLint @typescript-eslint/no-unused-vars va échouer
+export default function AttractionDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    return <h1>Détail</h1>;
+}
+```
+
+Quand `params` est réellement utilisé, le typer correctement avec `Promise<{ id: string }>` (Next.js 15 — les params sont asynchrones).
+
 ### Server Components vs Client Components
 - **Par défaut : Server Component** — pas de `'use client'` sauf si nécessaire
 - Ajouter `'use client'` **uniquement** si le composant utilise :
